@@ -8,6 +8,7 @@ package ontology;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFList;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -22,14 +23,14 @@ public class Ontology {
      */
     public static void main(String[] args) {
         final String NS = "http://www.vortic3.com/IFOPT/StopPlaceEquipment";
-            final String PIE = NS + "#PassengerInfoEquipment";
-                final String PIE_AI = PIE + "#AccessibilityInfoEnum";
-            final String AE = NS + "#AccessEquipment";
-            final String S = NS + "#Sign";
+            final String PIE = NS + "/PassengerInfoEquipment";
+                final String PIE_AI = PIE + "/AccessibilityInfoEnum";
+            final String AE = NS + "/AccessEquipment";
+            final String S = NS + "/Sign";
         
         
         // Create Ontology
-        final OntModel ontologia = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM);
+        final OntModel ontologia = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
         
         // Specify Access Metro prefix 
         ontologia.setNsPrefix("AccM", NS);
@@ -48,8 +49,8 @@ public class Ontology {
         // Add attributes Properties
         
         //PassengerInfoEquipment
-        //OntProperty passengerInfoFacilityType = ontologia.createOntProperty(PIE);
-            //passengerInfoFacilityType.addProperty(RDFS.domain, passengerInfoEquipment);
+        OntProperty passengerInfoFacilityType = ontologia.createOntProperty(PIE);
+            passengerInfoFacilityType.addProperty(RDFS.domain, passengerInfoEquipment);
                 //AccessibilityInfoEnum
                 RDFList acc_info = ontologia.createList();
                 acc_info.cons(ontologia.createIndividual(PIE_AI+ "#audioInformation", RDFS.label));
@@ -60,10 +61,10 @@ public class Ontology {
                 acc_info.cons(ontologia.createIndividual(PIE_AI+ "#tactileGuidingStrips", RDFS.label));
                 acc_info.cons(ontologia.createIndividual(PIE_AI+ "#largePrintTimetables", RDFS.label));
             
-            //OntClass accesibility_info = ontologia.createEnumeratedClass(PIE_AI, acc_info);
-            //passengerInfoFacilityType.addRange(accesibility_info);
-            //OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
-        //passengerInfoEquipment.addProperty(passengerInfoFacilityType, acc_info);
+            OntClass accesibility_info = ontologia.createEnumeratedClass(PIE_AI, acc_info);
+            passengerInfoFacilityType.addRange(accesibility_info);
+            OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
+        passengerInfoEquipment.addProperty(passengerInfoFacilityType, acc_info);
     
     
         ontologia.write(System.out);
