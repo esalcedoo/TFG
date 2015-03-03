@@ -8,10 +8,8 @@ package ontology;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFList;
-import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDFS;
 /**
  *
@@ -42,38 +40,33 @@ public class Ontology {
         final OntClass accessEquipment = ontologia.createClass(AE);
         final OntClass sign = ontologia.createClass(S);
         
-        // Add hierarchy Properties (creo que esto es repetir las cosas pero ahí lo dejo hasta que esté segura)
+        // Add hierarchy Properties
         
         stopPlaceEquipment.addSubClass(passengerInfoEquipment);
         stopPlaceEquipment.addSubClass(accessEquipment);
-        stopPlaceEquipment.addSubClass(sign);
-        
-        stopPlaceEquipment.addRDFType(passengerInfoEquipment);
-        stopPlaceEquipment.addRDFType(accessEquipment);
-        stopPlaceEquipment.addRDFType(sign);
-        
-        ontologia.write(System.out);
-        
+        stopPlaceEquipment.addSubClass(sign);        
         // Add attributes Properties
         
         //PassengerInfoEquipment
-        OntProperty passengerInfoFacilityType = ontologia.createOntProperty(PIE);
-            passengerInfoFacilityType.addProperty(RDFS.domain, passengerInfoEquipment);
-            //passengerInfoFacilityType.addRange(XSD.xenum);
+        //OntProperty passengerInfoFacilityType = ontologia.createOntProperty(PIE);
+            //passengerInfoFacilityType.addProperty(RDFS.domain, passengerInfoEquipment);
                 //AccessibilityInfoEnum
                 RDFList acc_info = ontologia.createList();
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#audioInformation", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#audioForHearingImpaired", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#visualDisplays", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#displaysForVisuallyImpaired", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#tactilePlatformEdges", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#tactileGuidingStrips", OWL.Thing));
-                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#largePrintTimetables", OWL.Thing));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#audioInformation", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#audioForHearingImpaired", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#visualDisplays", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#displaysForVisuallyImpaired", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#tactilePlatformEdges", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#tactileGuidingStrips", RDFS.label));
+                acc_info.cons(ontologia.createIndividual(PIE_AI+ "#largePrintTimetables", RDFS.label));
             
-            OntClass accesibility_info = ontologia.createEnumeratedClass(PIE_AI, acc_info);
-            passengerInfoFacilityType.addRange(accesibility_info);
-            OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
-        
+            //OntClass accesibility_info = ontologia.createEnumeratedClass(PIE_AI, acc_info);
+            //passengerInfoFacilityType.addRange(accesibility_info);
+            //OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
+        //passengerInfoEquipment.addProperty(passengerInfoFacilityType, acc_info);
+    
+    
+        ontologia.write(System.out);
     }
     
 }
