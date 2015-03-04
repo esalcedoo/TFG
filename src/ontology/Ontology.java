@@ -26,6 +26,7 @@ public class Ontology {
             final String PIE = NS + "/PassengerInfoEquipment";
                 final String PIE_AI = PIE + "/AccessibilityInfoEnum";
             final String AE = NS + "/AccessEquipment";
+                final String AE_IF = AE + "PTInfoFacilityEnum";
             final String S = NS + "/Sign";
         
         
@@ -46,6 +47,8 @@ public class Ontology {
         stopPlaceEquipment.addSubClass(passengerInfoEquipment);
         stopPlaceEquipment.addSubClass(accessEquipment);
         stopPlaceEquipment.addSubClass(sign);        
+        
+        
         // Add attributes Properties
         
         //PassengerInfoEquipment
@@ -63,13 +66,24 @@ public class Ontology {
             
             OntClass accesibility_info = ontologia.createEnumeratedClass(PIE_AI, acc_info);
             passengerInfoFacilityType.addRange(accesibility_info);
-            OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
         passengerInfoEquipment.addProperty(passengerInfoFacilityType, acc_info);
-        //Hola esto es una prueba de commit
-    
-        ontologia.write(System.out);
+                
+        OntProperty attribute1 = ontologia.createOntProperty(AE);  
+            attribute1.addProperty(RDFS.domain, passengerInfoEquipment);
+                //PTInfoFacilityEnum
+                RDFList info_fac = ontologia.createList();
+                info_fac.cons(ontologia.createIndividual(AE_IF+ "#timetablePoster", RDFS.label));
+                info_fac.cons(ontologia.createIndividual(AE_IF+ "#fareInformation", RDFS.label));
+                info_fac.cons(ontologia.createIndividual(AE_IF+ "#lineNetworkPlan", RDFS.label));
+                info_fac.cons(ontologia.createIndividual(AE_IF+ "#lineTimetable", RDFS.label));
+                info_fac.cons(ontologia.createIndividual(AE_IF+ "#stopTimetable", RDFS.label));
+            OntClass ptInfoFacility = ontologia.createEnumeratedClass(AE_IF, info_fac);
+            attribute1.addRange(ptInfoFacility);
+        passengerInfoEquipment.addProperty(attribute1, info_fac);
         
-        BLA  BLA BLA BLA BLA BLA
+        
+        
+        ontologia.write(System.out);
     }
     
 }
