@@ -68,6 +68,8 @@ public class Ontology {
     
     
         ontologia.write(System.out);
+        
+        BLA  BLA BLA BLA BLA BLA
     }
     
 }
