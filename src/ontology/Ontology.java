@@ -65,7 +65,7 @@ public class Ontology {
             passengerInfoFacilityType.addRange(accesibility_info);
             OntProperty attribute1 = ontologia.createOntProperty(NS+"PTInfoFacility");
         passengerInfoEquipment.addProperty(passengerInfoFacilityType, acc_info);
-    
+        //Hola esto es una prueba de commit
     
         ontologia.write(System.out);
     }
