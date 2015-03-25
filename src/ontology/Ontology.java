@@ -5,103 +5,50 @@
  */
 
 package ontology;
+import com.URI_Access;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.vocabulary.RDFS;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
+import com.vocabulary.AccessibilityInfoEnum;
+import com.vocabulary.EnumDataType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ontology.PassengerInfoEquipment;
+import static ontology.PassengerInfoEquipment.acc_info.audioInformation;
 /**
  *
  * @author elena
  */
 public class Ontology {
 //        final static String AE = NS + "/AccessEquipment";
-//        final static String S = NS + "/Sign";
-    
-    protected final static OntModel ontologia = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
-    
-    protected final void store_URI(String name, String uri){
-        Properties urls = new Properties();
-        OutputStream output = null;
-        try {
-            File file = new File("URL.properties");
-            if (!file.exists()){
-                file.createNewFile();
-            }
-            
-            output = new FileOutputStream(file, false);
-
-            // set the URL value
-            urls.setProperty(name,uri);
-
-            // save properties to project root folder
-            urls.store(output, null);
-
-        } catch (IOException io) {
-            io.printStackTrace();
-        } finally {
-            if (output != null) {
-                try {
-                        output.close();
-                } catch (IOException e) {
-                        e.printStackTrace();
-                }
-            }
-        }
-    }
-    
-    protected final String get_URI(String name){
-        Properties urls = new Properties();
-	InputStream input = null;
-        String uri = null;
-	try {
-            input = new FileInputStream("URL.properties");
-            // load a properties file
-            urls.load(input);
-
-            // get the property value and print it out
-            uri= urls.getProperty(name);
- 
-	} catch (IOException ex) {
-            ex.printStackTrace(System.out);
-	} finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace(System.out);
-                }
-            }
-	}
-        return uri;
-    }
-    
-        
+//        final static String S = NS + "/Sign";           
     /**
      * @param args the command line arguments
+     * 
      */
+    
+    protected static OntModel ontologia = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+    private static long millis = 30000;
+    
     public static void main(String[] args) {
+        // Create OntClases
+        URI_Access uriAccess=new URI_Access();
+        uriAccess.store_URI("IFOPT","http://www.vortic3.com/IFOPT");
+        System.out.println("Hola esta es la uri del ifopt ONTOLOGY" + uriAccess.get_URI("IFOPT"));
+        //try {
+        //    Thread.sleep(millis);
+        //} catch (InterruptedException ex) {
+        //    Logger.getLogger(Ontology.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        PassengerInfoEquipment passengerInfoEquipment=new PassengerInfoEquipment();
+        // Create Individuals
+        Individual instance_passengerInfoEquipment = ontologia.createIndividual(passengerInfoEquipment.toString(),passengerInfoEquipment.getPassengerInfoEquipment_class());
 
+        instance_passengerInfoEquipment.addLiteral(passengerInfoEquipment.getPassengerInfoFacilityType(),audioInformation);
         
-        // Create stopPlace individuals
-        Individual vodafoneSol;
-                
-        vodafoneSol = ontologia.createIndividual(new StopPlaceEquipment().toString()+"/VodafoneSol", RDFS.Resource);
-        
-        //Create passengerInfoEquipment Individual;
-        Individual passengerInfoEquipment;
-        
-        
-        ontologia.write(System.out);
-        
-        
+        ontologia.write(System.out);        
         
     }
            
