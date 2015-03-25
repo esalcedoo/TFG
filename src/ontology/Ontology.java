@@ -9,13 +9,7 @@ import com.URI_Access;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.vocabulary.AccessibilityInfoEnum;
-import com.vocabulary.EnumDataType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ontology.PassengerInfoEquipment;
 import static ontology.PassengerInfoEquipment.acc_info.audioInformation;
 /**
  *
@@ -45,7 +39,7 @@ public class Ontology {
         PassengerInfoEquipment passengerInfoEquipment=new PassengerInfoEquipment();
         // Create Individuals
         Individual instance_passengerInfoEquipment = ontologia.createIndividual(passengerInfoEquipment.toString(),passengerInfoEquipment.getPassengerInfoEquipment_class());
-
+        //instance_passengerInfoEquipment.add
         instance_passengerInfoEquipment.addLiteral(passengerInfoEquipment.getPassengerInfoFacilityType(),audioInformation);
         
         ontologia.write(System.out);        
