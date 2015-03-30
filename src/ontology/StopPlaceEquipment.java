@@ -8,34 +8,31 @@ package ontology;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.URI_Access;
+import com.uris.URI_Access;
 
 /**
  *
  * @author elena
  */
-public class StopPlaceEquipment extends Ontology{
-    private OntClass stopPlaceEquipment;
+public class StopPlaceEquipment{
+    private OntClass stopPlaceEquipment_class;
     
-    public StopPlaceEquipment() {
+    /**
+     *
+     * @param ontologia
+     */
+    public StopPlaceEquipment(OntModel ontologia) {
         URI_Access uriAccess=new URI_Access();
-        uriAccess.store_URI("NS",uriAccess.get_URI("IFOPT") + "/StopPlaceEquipment");
-        // Create Ontology Class
-        System.out.println("crea url NS");
-        stopPlaceEquipment = ontologia.createClass(uriAccess.get_URI("NS"));
+        stopPlaceEquipment_class = ontologia.createClass(uriAccess.get_URI("SPE"));
     }
     
     @Override
     public String toString(){
         URI_Access uriAccess=new URI_Access();
-        return uriAccess.get_URI("NS");
+        return uriAccess.get_URI("SPE");
     }
 
-    public OntClass getStopPlaceEquipment() {
-        return stopPlaceEquipment;
+    public OntClass getStopPlaceEquipment_class() {
+        return stopPlaceEquipment_class;
     }    
-
-    public OntModel getOntologia() {
-        return ontologia;
-    }
 }
