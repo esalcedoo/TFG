@@ -46,7 +46,8 @@ public class PassengerInfoEquipment extends StopPlaceEquipment{
     //private void add_property_attribute1(pt_info_fac pif){
         //uriAccess.store_URI("PIE_A1", uriAccess.get_URI("PIE") + "/Attribute1");
         attribute1 = ontologia.createOntProperty(uriAccess.get_URI("PIE_A1"));
-
+        attribute1.addRange(EnumDataType.pt_info_fac);
+        attribute1.addDomain(passengerInfoEquipment_class);
     }
     
     // Getters & Setters
